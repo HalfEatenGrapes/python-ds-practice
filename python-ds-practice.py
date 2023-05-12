@@ -383,6 +383,7 @@ def friend_date(a, b):
         >>> friend_date(sauron, gandalf)
         True
     """
+    return bool(set(a[2]) & set(b[2]))
 
 def triple_and_filter(nums):
     """Return new list of tripled nums for those nums divisible by 4.
@@ -399,6 +400,7 @@ def triple_and_filter(nums):
         >>> triple_and_filter([1, 2])
         []
     """
+    return [num * 3 for num in nums if num % 4 == 0]
 
 def extract_full_names(people):
     """Return list of names, extracting from first+last keys in people dicts.
@@ -416,6 +418,7 @@ def extract_full_names(people):
         >>> extract_full_names(names)
         ['Ada Lovelace', 'Grace Hopper']
     """
+    return [f"{person['first']} {person['last']}" for person in people]
 
 def sum_floats(nums):
     """Return sum of floating point numbers in nums.
@@ -426,6 +429,7 @@ def sum_floats(nums):
         >>> sum_floats([1, 2, 3])
         0
     """
+    return sum([num for num in nums if isinstance(num, float)])
 
     # hint: to find out if something is a float, you should use the
     # "isinstance" function --- research how to use this to find out
@@ -440,6 +444,7 @@ def list_check(lst):
         >>> list_check([[1], "nope"])
         False
     """
+    return all([isinstance(item, list) for item in lst])
 
 def remove_every_other(lst):
     """Return a new list of other item.
@@ -454,6 +459,7 @@ def remove_every_other(lst):
         >>> lst
         [1, 2, 3, 4, 5]
     """
+    return [item for item in lst[::2]]
 
 def sum_pairs(nums, goal):
     """Return tuple of first pair of nums that sum to goal.
@@ -478,6 +484,11 @@ def sum_pairs(nums, goal):
         >>> sum_pairs([11, 20, 4, 2, 1, 5], 100)
         ()
     """
+    for num in nums:
+        for num2 in nums:
+            if num + num2 == goal:
+                return (num, num2)
+    return ()
 
 def vowel_count(phrase):
     """Return frequency map of vowels, case-insensitive.
@@ -488,6 +499,8 @@ def vowel_count(phrase):
         >>> vowel_count('HOW ARE YOU? i am great!') 
         {'o': 2, 'a': 3, 'e': 2, 'u': 1, 'i': 1}
     """
+    vowels = 'aeiou'
+    return {letter: phrase.lower().count(letter) for letter in phrase.lower() if letter in vowels}
 
 def titleize(phrase):
     """Return phrase in title case (each word capitalized).
@@ -498,6 +511,7 @@ def titleize(phrase):
         >>> titleize('oNLy cAPITALIZe fIRSt')
         'Only Capitalize First'
     """
+    return ' '.join([word.capitalize() for word in phrase.split(' ')])
 
 def find_factors(num):
     """Find factors of num, in increasing order.
@@ -514,6 +528,7 @@ def find_factors(num):
     >>> find_factors(321421)
     [1, 293, 1097, 321421]
     """
+    return [factor for factor in range(1, num + 1) if num % factor == 0]
 
 def includes(collection, sought, start=None):
     """Is sought in collection, starting at index start?
@@ -547,6 +562,13 @@ def includes(collection, sought, start=None):
         >>> includes({"apple": "red", "berry": "blue"}, "blue")
         True
     """
+    if isinstance(collection, dict):
+        return sought in collection.values()
+    if isinstance(collection, set):
+        return sought in collection
+    if start:
+        return sought in collection[start:]
+    return sought in collection
 
 def repeat(phrase, num):
     """Return phrase, repeated num times.
@@ -568,6 +590,7 @@ def repeat(phrase, num):
         >>> repeat('abc', 'nope') is None
         True
     """
+    return phrase * num if isinstance(num, int) and num >= 0 else None
 
 def truncate(phrase, n):
     """Return truncated-at-n-chars version of  phrase.
@@ -595,6 +618,7 @@ def truncate(phrase, n):
         >>> truncate("Woah", 3)
         '...'
     """
+    return phrase[:n - 3] + '...' if n >= 3 else 'Truncation must be at least 3 characters.' if n < 3 else phrase
 
 def two_list_dictionary(keys, values):
     """Given keys and values, make dictionary of those.
@@ -613,6 +637,7 @@ def two_list_dictionary(keys, values):
         >>> two_list_dictionary(['a', 'b', 'c'], [1, 2, 3, 4])
         {'a': 1, 'b': 2, 'c': 3}
    """
+    return {key: values[index] if index < len(values) else None for index, key in enumerate(keys)}
     
 def sum_range(nums, start=0, end=None):
     """Return sum of numbers from start...end.
@@ -639,6 +664,7 @@ def sum_range(nums, start=0, end=None):
         >>> sum_range(nums, 1, 99)
         9
     """
+    return sum(nums[start:end + 1] if end else nums[start:])
 
 def same_frequency(num1, num2):
     """Do these nums have same frequencies of digits?
@@ -652,6 +678,7 @@ def same_frequency(num1, num2):
         >>> same_frequency(1212, 2211)
         True
     """
+    return Counter(str(num1)) == Counter(str(num2))
 
 def two_oldest_ages(ages):
     """Return two distinct oldest ages as tuple (second-oldest, oldest)..
@@ -668,6 +695,7 @@ def two_oldest_ages(ages):
         >>> two_oldest_ages([1, 5, 5, 2])
         (2, 5)
     """
+    return tuple(sorted(set(ages))[-2:])
 
     # NOTE: don't worry about an optimized runtime here; it's fine if
     # you have a runtime worse than O(n)
@@ -692,6 +720,7 @@ def find_the_duplicate(nums):
         >>> find_the_duplicate([2, 1, 3, 4]) is None
         True
     """
+    return next((num for num in nums if nums.count(num) > 1), None)
 
 def sum_up_diagonals(matrix):
     """Given a matrix [square list of lists], return sum of diagonals.
@@ -725,6 +754,7 @@ def min_max_keys(d):
         >>> min_max_keys({"apple": "red", "cherry": "red", "berry": "blue"})
         ('apple', 'cherry')
     """
+    return (min(d.keys()), max(d.keys()))
 
 def find_greater_numbers(nums):
     """Return # of times a number is followed by a greater number.
@@ -746,7 +776,9 @@ def find_greater_numbers(nums):
 
         >>> find_greater_numbers([])
         0
-    """                                    
+    """ 
+    return sum(1 for index, num in enumerate(nums) for next_num in nums[index + 1:] if num < next_num)
+
 
 # FURTHER STUDIES
 
@@ -779,6 +811,7 @@ def is_odd_string(word):
         >>> is_odd_string('amazing')
         True
     """
+    return sum(ord(char) - 96 for char in word.lower()) % 2 != 0
 
     # Hint: you may find the ord() function useful here
 
@@ -806,7 +839,8 @@ def valid_parentheses(parens):
         >>> valid_parentheses(")()(")
         False
     """
-
+    return parens.count('(') == parens.count(')') and parens[0] != ')' and parens[-1] != '('
+    
 def three_odd_numbers(nums):
     """Is the sum of any 3 sequential numbers odd?"
 
@@ -822,6 +856,7 @@ def three_odd_numbers(nums):
         >>> three_odd_numbers([1, 2, 3, 3, 2])
         False
     """
+    return any(sum(nums[index: index + 3]) % 2 != 0 for index in range(len(nums) - 2))
 
 def reverse_vowels(s):
     """Reverse vowels in a string.
@@ -844,3 +879,5 @@ def reverse_vowels(s):
     reverse_vowels("why try, shy fly?")
     'why try, shy fly?''
     """
+    vowels = [char for char in s if char in 'aeiouAEIOU']
+    return ''.join(char if char not in 'aeiouAEIOU' else vowels.pop() for char in s)
