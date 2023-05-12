@@ -258,6 +258,7 @@ def capitalize(phrase):
         >>> capitalize('only first word')
         'Only first word'
     """
+    return phrase.capitalize()
 
 def compact(lst):
     """Return a copy of lst with non-true elements removed.
@@ -265,6 +266,7 @@ def compact(lst):
         >>> compact([0, 1, 2, '', [], False, (), None, 'All done'])
         [1, 2, 'All done']
     """
+    return [item for item in lst if item]
 
 def intersection(l1, l2):
     """Return intersection of two lists as a new list::
@@ -304,6 +306,7 @@ def partition(lst, fn):
         >>> partition(["hi", None, 6, "bye"], is_string)
         [['hi', 'bye'], [None, 6]]
     """
+    return [[item for item in lst if fn(item)], [item for item in lst if not fn(item)]]
 
 def mode(nums):
     """Return most-common number in list.
@@ -318,6 +321,7 @@ def mode(nums):
         >>> mode([2, 2, 3, 3, 2])
         2
     """
+    return max(nums, key=nums.count)
 
 def calculate(operation, a, b, make_int=False, message='The result is'):
     """Perform operation on a + b, ()possibly truncating) & returning w/msg.
@@ -347,6 +351,19 @@ def calculate(operation, a, b, make_int=False, message='The result is'):
         >>> calculate('foo', 2, 3)
         
     """
+    if operation == 'add':
+        result = a + b
+    elif operation == 'subtract':
+        result = a - b
+    elif operation == 'multiply':
+        result = a * b
+    elif operation == 'divide':
+        result = a / b
+    else:
+        return None
+    if make_int:
+        result = int(result)
+    return f'{message} {result}'
 
 def friend_date(a, b):
     """Given two friends, do they have any hobbies in common?
