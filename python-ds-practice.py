@@ -54,6 +54,12 @@ def number_compare(a, b):
         >>> number_compare(1, -2)
         'First is greater'
     """
+    if a>b:
+        return "First is greater"
+    if b>a:
+        return "Second is greater"
+    if b==a:
+        return "Numbers are equal"
 
 def reverse_string(phrase):
     """Reverse string,
@@ -64,6 +70,9 @@ def reverse_string(phrase):
         >>> reverse_string('sauce')
         'ecuas'
     """
+    phrase_list=list(phrase)
+    phrase_list.reverse()
+    return "".join(phrase_list)
 
 def single_letter_count(word, letter):
     """How many times does letter appear in word (case-insensitively)?
@@ -77,6 +86,9 @@ def single_letter_count(word, letter):
         >>> single_letter_count("Hello World", 'l')
         3
     """
+    lower_word=word.lower()
+    word_list=list(lower_word)
+    return word_list.count(letter)
 
 def multiple_letter_count(phrase):
     """Return dict of {ltr: frequency} from phrase.
@@ -87,6 +99,14 @@ def multiple_letter_count(phrase):
         >>> multiple_letter_count('Yay')
         {'Y': 1, 'a': 1, 'y': 1}
     """
+    ltr_frq={}
+    for letter in phrase:
+        keys=ltr_frq.keys()
+        if letter in keys:
+            ltr_frq[letter]+=1
+        else:
+            ltr_frq[letter]=1
+    return ltr_frq
 
 def list_manipulation(lst, command, location, value=None):
     """Mutate lst to add/remove from beginning or end.
@@ -130,6 +150,27 @@ def list_manipulation(lst, command, location, value=None):
         >>> list_manipulation(lst, 'add', 'dunno') is None
         True
     """
+    if command == "remove":
+        if location =="end":
+            lst.pop()
+            return lst
+        elif location == "beginning":
+            lst.pop(0)
+            return lst
+        else:
+            return None
+    elif command =="add":
+        if location == "end":
+            lst.append(value)
+            return lst
+        elif location == "beginning":
+            lst.insert(0,value)
+            return lst
+        else:
+            return None
+    else:
+        return None
+
 
 def is_palindrome(phrase):
     """Is phrase a palindrome?
@@ -154,6 +195,13 @@ def is_palindrome(phrase):
         >>> is_palindrome('Noon')
         True
     """
+    low_word=phrase.lower()
+    phrase_list=list(low_word)
+    phrase_list.reverse()
+    if low_word=="".join(phrase_list):
+        return True
+    else:
+        return False
 
 def frequency(lst, search_term):
     """Return frequency of term in lst.
@@ -164,9 +212,10 @@ def frequency(lst, search_term):
         >>> frequency([1, 4, 3], 7)
         0
     """
+    return lst.count(search_term)
 
 def flip_case(phrase, to_swap):
-    """Flip [to_swap] case each time it appears in phrase.
+    """Flip [to_swap] case each time it appears in phrase ignoring case.
 
         >>> flip_case('Aaaahhh', 'a')
         'aAAAhhh'
@@ -176,8 +225,9 @@ def flip_case(phrase, to_swap):
 
         >>> flip_case('Aaaahhh', 'h')
         'AaaaHHH'
-
     """
+    return phrase.replace(to_swap,to_swap.swapcase())
+
 
 def multiply_even_numbers(nums):
     """Multiply the even numbers.
@@ -193,6 +243,11 @@ def multiply_even_numbers(nums):
         >>> multiply_even_numbers([1, 3, 5])
         1
     """
+    product=1
+    for num in nums:
+        if num % 2 == 0:
+            product*=num
+    return product
 
 def capitalize(phrase):
     """Capitalize first letter of first word of phrase.
@@ -226,6 +281,7 @@ def intersection(l1, l2):
         >>> intersection([1, 2, 3], [4, 5, 6])
         []
     """
+    return list(set(l1) & set(l2))
 
 def partition(lst, fn):
     """Partition lst by predicate.
@@ -771,5 +827,3 @@ def reverse_vowels(s):
     reverse_vowels("why try, shy fly?")
     'why try, shy fly?''
     """
-
-    
